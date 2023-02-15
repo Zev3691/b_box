@@ -2,10 +2,10 @@ package exec
 
 import (
 	"b_box/util"
+	"b_box/util/log"
 	"bytes"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 )
@@ -41,12 +41,13 @@ func initMysql(cmd *exec.Cmd) error {
 	cmd.Stdout, cmd.Stderr = &stdout, &stderr // 标准输出 标准错误
 	err := cmd.Run()
 
-	log.Println("安装mysql服务 cmd.String() ", cmd.String())
-	log.Println("安装mysql服务 out ", stdout.String())
-	log.Println("安装mysql服务 err ", stderr.String())
+	log.Println("安装mysql服务 cmd.String() %v", cmd.String())
+	log.Println("安装mysql服务 cmd.dir %v", cmd.Dir)
+	log.Println("安装mysql服务 out %v", stdout.String())
+	log.Println("安装mysql服务 err %v", stderr.String())
 
 	if err != nil {
-		log.Println("安装mysql服务失败: ", err)
+		log.Println("安装mysql服务失败: %v", err)
 		return fmt.Errorf("安装mysql服务失败: %v", err)
 	}
 	return nil
@@ -97,8 +98,8 @@ func resetPwd(cmd *exec.Cmd) error {
 	log.Println("重载mysql密码 err ", stderr.String())
 
 	if err != nil {
-		log.Println("安装mysql服务失败: ", err)
-		return fmt.Errorf("安装mysql服务失败: %v", err)
+		log.Println("重载mysql密码失败: ", err)
+		return fmt.Errorf("重载mysql密码失败: %v", err)
 	}
 	return nil
 }
@@ -114,8 +115,8 @@ func start(cmd *exec.Cmd) error {
 	log.Println("启动mysql服务 err ", stderr.String())
 
 	if err != nil {
-		log.Println("安装mysql服务失败: %v", err)
-		return fmt.Errorf("安装mysql服务失败: %v", err)
+		log.Println("启动mysql服务: %v", err)
+		return fmt.Errorf("启动mysql服务失败: %v", err)
 	}
 	return nil
 }
@@ -141,7 +142,10 @@ func stop(cmd *exec.Cmd) error {
 // Init 给设置按钮内部的初始化数据库按钮调用的封装方法集 见../menu
 func Init(baseDir string, ifc Ifc) error {
 	exist, err := util.PathExists(baseDir + `\.init`)
-	log.Println("检查数据库init文件是否存在err ", err)
+	if err != nil {
+		log.Println("检查数据库init文件是否存在err %v", err)
+	}
+	log.Println("检查数据库init文件是否存在 %v", exist)
 	if exist {
 		return nil
 	}

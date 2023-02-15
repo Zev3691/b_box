@@ -70,7 +70,7 @@ func (m *Menu) setting(ctx context.Context) *fyne.Container {
 				path := filepath.ToSlash(util.GetLocalPath() + `\server\mysql\`)
 				err := exec.Init(path, exec.Mysql{})
 				if err != nil && !errors.Is(err, fs.ErrExist) {
-					log.Println(err)
+					log.Println("初始化数据库err %v", err)
 					dialog.ShowError(err, window)
 				} else {
 					dialog.NewCustom(

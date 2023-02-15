@@ -3,8 +3,8 @@
 package exec
 
 import (
+	"b_box/util/log"
 	"fmt"
-	"log"
 	"os/exec"
 )
 
@@ -30,27 +30,26 @@ func (m Mysql) Stop(baseDir string) error {
 }
 
 func (m Mysql) InitCmd(baseDir string) *exec.Cmd {
-	log.Println("windows")
 	cmd := exec.Command("powershell", `.\mysqld.exe`, "--install", "mysql")
-	cmd.Dir = baseDir + `\bin`
+	cmd.Dir = baseDir + `bin`
 	return cmd
 }
 
 func (m Mysql) InitialCmd(baseDir string) *exec.Cmd {
 	cmd := exec.Command("powershell", `.\mysqld.exe`, "--initialize", "--console")
-	cmd.Dir = baseDir + `\bin`
+	cmd.Dir = baseDir + `bin`
 	return cmd
 }
 
 func (m Mysql) SetPwdCmd(baseDir string) *exec.Cmd {
 	sqlPath := baseDir + "\\init.sql"
 	cmd := exec.Command("powershell", fmt.Sprintf(`.\mysql -u root -p -e "source %s"`, sqlPath))
-	cmd.Dir = baseDir + `\bin` // mysql执行文件路径
+	cmd.Dir = baseDir + `bin` // mysql执行文件路径
 	return cmd
 }
 
 func (m Mysql) EnvCmd(baseDir string) *exec.Cmd {
-	c := `setx PATH "%PATH%;` + fmt.Sprintf(`%s\bin"`, baseDir)
+	c := `setx PATH "%PATH%;` + fmt.Sprintf(`%sbin"`, baseDir)
 	log.Println("set path ", c)
 	return exec.Command("powershell", c)
 }

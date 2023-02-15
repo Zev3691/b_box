@@ -1,23 +1,24 @@
 package log
 
 import (
-	"log"
+	"github.com/sirupsen/logrus"
 	"os"
 	"time"
 )
 
-var loger *log.Logger
+var logEnt *logrus.Logger
 
-func init() {
-	file := "./log/" + time.Now().Format("20060102") + ".log"
-	logFile, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0766)
+func Init() {
+	logEnt = logrus.New()
+	name := time.Now().Format("20060102")
+	fd, err := os.OpenFile("./log/"+name+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0777)
 	if err != nil {
-		panic(err)
+		panic("创建日志文件失败")
 	}
-	loger = log.New(logFile, "", log.LstdFlags|log.Lshortfile|log.LUTC) // 将文件设置为loger作为输出
-	return
+	logEnt.SetOutput(fd)
+	logEnt.Printf("\n\n\n\n%s", "----------------------------------------")
 }
 
-func Println(v ...any) {
-	loger.Println(v)
+func Println(format string, args ...interface{}) {
+	logEnt.Infof(format, args)
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"b_box/service"
+	"b_box/util/log"
 	"os"
 )
 
@@ -13,5 +14,6 @@ func init() {
 }
 
 func main() {
+	log.Init()
 	service.Do()
 }

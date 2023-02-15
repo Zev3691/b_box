@@ -28,7 +28,7 @@ const (
 var localPath string
 
 func SetLocalPath(path string) {
-	log.Println("设置本地路径 ", path)
+	log.Println("设置本地路径 %v", path)
 	localPath = path
 }
 

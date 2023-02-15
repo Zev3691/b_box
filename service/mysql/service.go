@@ -119,5 +119,5 @@ func (m *Mysql) Status() *canvas.Text {
 }
 
 func (m *Mysql) Healthy() {
-
+	// todo
 }
