@@ -10,9 +10,11 @@
 #### 环境要求：
 1、openGL版本>2.0
 
-2、gcc环境，针对Windows推荐下载 tdm64-gcc-版本号.exe进行运行环境安装
+2、c++运行库 `https://www.microsoft.com/zh-cn/download/details.aspx?id=40784`
 
-3、有着特殊要求的文件目录结构 (以Windows为例)
+3、gcc环境 win: `https://jmeubank.github.io/tdm-gcc/`, 其他系统使用终端进行安装
+
+4、有着特殊要求的文件目录结构 (以Windows为例)
    mysql和nginx文件夹下的内容均从官网获取，可自行替换，mysql推荐版本选择5.7
 
 ![image](https://user-images.githubusercontent.com/26448696/218948109-6e1ef18b-075e-4476-bd3f-9f7cc0a4658a.png)
